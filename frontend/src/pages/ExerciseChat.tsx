@@ -235,7 +235,7 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
           )}
           {isComplete && (
             <div style={styles.completionPanel as any}>
-              <div style={styles.completionTitle}>Exercise Complete!</div>
+              <div style={styles.completionTitle}>Esercizio completato!</div>
               {feedbackText && (
                 <div style={styles.feedback as any}><ReactMarkdown>{feedbackText}</ReactMarkdown></div>
               )}

@@ -71,7 +71,7 @@ router.post('/:exerciseId', async (req: Request, res: Response) => {
       const feedbackResponse = await client.messages.create({
         model: 'claude-sonnet-4-5',
         max_tokens: 1024,
-        system: 'Based on the following conversation from an educational exercise, provide constructive feedback to the student about their performance. Be specific, encouraging, and suggest areas for improvement.',
+        system: 'Basandoti sulla seguente conversazione di un esercizio educativo, fornisci un feedback costruttivo allo studente sulla sua performance. Sii specifico, incoraggiante e suggerisci aree di miglioramento. Rispondi sempre in italiano.',
         messages: [
           {
             role: 'user',
