@@ -93,8 +93,10 @@ const styles = {
   } as React.CSSProperties,
   completionPanel: {
     padding: '24px',
+    marginTop: '12px',
     borderTop: '2px solid #00c853',
     textAlign: 'center',
+    width: '100%',
   } as React.CSSProperties,
   completionTitle: {
     color: '#00c853',
@@ -231,9 +233,37 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
               <div style={{ ...styles.dot, animationDelay: '0.4s' }} />
             </div>
           )}
+          {isComplete && (
+            <div style={styles.completionPanel as any}>
+              <div style={styles.completionTitle}>Exercise Complete!</div>
+              {feedbackText && (
+                <div style={styles.feedback as any}><ReactMarkdown>{feedbackText}</ReactMarkdown></div>
+              )}
+              {videoUrl && (
+                <div style={{ marginTop: '16px' }}>
+                  {videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be') ? (
+                    <iframe
+                      width="560"
+                      height="315"
+                      src={`https://www.youtube.com/embed/${
+                        videoUrl.includes('youtu.be')
+                          ? videoUrl.split('/').pop()
+                          : new URL(videoUrl).searchParams.get('v')
+                      }`}
+                      frameBorder="0"
+                      allowFullScreen
+                      style={{ maxWidth: '100%', borderRadius: '8px' }}
+                    />
+                  ) : (
+                    <video controls src={videoUrl} style={{ maxWidth: '100%', borderRadius: '8px' }} />
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
-        {!isComplete ? (
+        {!isComplete && (
           <div style={styles.inputArea}>
             <input
               style={styles.input}
@@ -254,33 +284,6 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
             >
               Send
             </button>
-          </div>
-        ) : (
-          <div style={styles.completionPanel as any}>
-            <div style={styles.completionTitle}>Exercise Complete!</div>
-            {feedbackText && (
-              <div style={styles.feedback as any}><ReactMarkdown>{feedbackText}</ReactMarkdown></div>
-            )}
-            {videoUrl && (
-              <div style={{ marginTop: '16px' }}>
-                {videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be') ? (
-                  <iframe
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${
-                      videoUrl.includes('youtu.be')
-                        ? videoUrl.split('/').pop()
-                        : new URL(videoUrl).searchParams.get('v')
-                    }`}
-                    frameBorder="0"
-                    allowFullScreen
-                    style={{ maxWidth: '100%', borderRadius: '8px' }}
-                  />
-                ) : (
-                  <video controls src={videoUrl} style={{ maxWidth: '100%', borderRadius: '8px' }} />
-                )}
-              </div>
-            )}
           </div>
         )}
       </div>
