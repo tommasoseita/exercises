@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { api } from '../api';
 import { Exercise, ChatMessage } from '../types';
 
@@ -52,7 +53,6 @@ const styles = {
     borderRadius: '12px',
     lineHeight: 1.5,
     fontSize: '14px',
-    whiteSpace: 'pre-wrap',
     wordWrap: 'break-word',
   } as React.CSSProperties,
   userMsg: {
@@ -212,7 +212,7 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
           {preview && <span style={styles.badge}>Preview Mode</span>}
         </div>
 
-        <div ref={chatRef} style={styles.chatArea}>
+        <div ref={chatRef} style={styles.chatArea} className="chat-area">
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -221,7 +221,7 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
                 ...(msg.role === 'user' ? styles.userMsg : styles.assistantMsg),
               }}
             >
-              {msg.content}
+              <ReactMarkdown>{msg.content}</ReactMarkdown>
             </div>
           ))}
           {loading && (
@@ -259,7 +259,7 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
           <div style={styles.completionPanel as any}>
             <div style={styles.completionTitle}>Exercise Complete!</div>
             {feedbackText && (
-              <div style={styles.feedback as any}>{feedbackText}</div>
+              <div style={styles.feedback as any}><ReactMarkdown>{feedbackText}</ReactMarkdown></div>
             )}
             {videoUrl && (
               <div style={{ marginTop: '16px' }}>
@@ -290,6 +290,9 @@ export default function ExerciseChat({ preview = false }: { preview?: boolean })
           0%, 80%, 100% { transform: translateY(0); }
           40% { transform: translateY(-6px); }
         }
+        .chat-area p:first-child { margin-top: 0; }
+        .chat-area p:last-child { margin-bottom: 0; }
+        .chat-area hr { border: none; border-top: 1px solid #ccc; margin: 8px 0; }
       `}</style>
     </div>
   );
