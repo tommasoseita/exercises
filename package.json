@@ -1,0 +1,5 @@
+{
+  "name": "ai-exercise-platform",
+  "private": true,
+  "workspaces": ["backend", "frontend"]
+}
